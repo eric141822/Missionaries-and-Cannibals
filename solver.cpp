@@ -116,7 +116,7 @@ void solve(State *start)
 int main()
 {
     int ml, cl;
-    std::cout << "Please enter the amount of missionaries and cannibals on the river's left.\nPlease note that there are it's IMPOSSIBLE to solve with more than 3 Missionaries and 3 Cannibals\nMissionaries: ";
+    std::cout << "Please enter the amount of missionaries and cannibals on the river's left.\nPlease note it's IMPOSSIBLE to solve with more than 3 Missionaries and 3 Cannibals\nMissionaries: ";
 
     std::cin >> ml;
     std::cout << "Cannibals: ";
