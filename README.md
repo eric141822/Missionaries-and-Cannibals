@@ -1,6 +1,6 @@
 # Missionaries-and-Cannibals
 
-This is a straight-forward C++ program to solve the classic missionaries and cannibals as a state space problem whenever there's a possible solution.
+This is a straight-forward C++ program using BFS to solve the classic missionaries and cannibals as a state space problem whenever there's a possible solution.
 
 Missionaries and Cannibals must cross a river using a boat which can carry at most two people, under the constraint that, for both banks, if there are missionaries present on the bank, they cannot be outnumbered by cannibals at any point (if they were, the cannibals would eat the missionaries). The boat cannot cross the river by itself with no people on board.
 
