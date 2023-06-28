@@ -1,7 +1,7 @@
 all: main.out
 
 CC:=g++
-FLAGS = -Wall -g -pedantic-errors -O3 -std=c++11
+FLAGS = -Wall -g -pedantic-errors -O3 -std=c++17
 
 main.out: state.o solver.o
 	$(CC) $(FLAGS) -o main.out state.o solver.o

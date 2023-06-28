@@ -5,7 +5,8 @@
 #include <deque>
 #include <chrono>
 
-void adder(std::vector<State *> &arr, State *s)
+typedef std::shared_ptr<State> StatePtr;
+void adder(std::vector<StatePtr> &arr, StatePtr s)
 {
     if (s->isValid())
     {
@@ -13,36 +14,36 @@ void adder(std::vector<State *> &arr, State *s)
     }
 }
 
-std::vector<State *> generateNodeArray(State *s)
+std::vector<StatePtr> generateNodeArray(StatePtr s)
 {
-    std::vector<State *> arr;
+    std::vector<StatePtr> arr;
     if (s->boatPos == 0)
     {
-        adder(arr, new State(s->mRight + 1, s->cRight + 1, s->mLeft - 1, s->cLeft - 1, 1, s)); //move 1m and 1c to right
-        adder(arr, new State(s->mRight + 2, s->cRight, s->mLeft - 2, s->cLeft, 1, s));         //move 2m to right
-        adder(arr, new State(s->mRight, s->cRight + 2, s->mLeft, s->cLeft - 2, 1, s));         //move 2c to right
-        adder(arr, new State(s->mRight + 1, s->cRight, s->mLeft - 1, s->cLeft, 1, s));         //move 1m to right
-        adder(arr, new State(s->mRight, s->cRight + 1, s->mLeft, s->cLeft - 1, 1, s));
+        adder(arr, std::make_unique<State>(s->mRight + 1, s->cRight + 1, s->mLeft - 1, s->cLeft - 1, 1, s)); //move 1m and 1c to right
+        adder(arr, std::make_unique<State>(s->mRight + 2, s->cRight, s->mLeft - 2, s->cLeft, 1, s));         //move 2m to right
+        adder(arr, std::make_unique<State>(s->mRight, s->cRight + 2, s->mLeft, s->cLeft - 2, 1, s));         //move 2c to right
+        adder(arr, std::make_unique<State>(s->mRight + 1, s->cRight, s->mLeft - 1, s->cLeft, 1, s));         //move 1m to right
+        adder(arr, std::make_unique<State>(s->mRight, s->cRight + 1, s->mLeft, s->cLeft - 1, 1, s));
     }
     else
     {
-        adder(arr, new State(s->mRight - 1, s->cRight - 1, s->mLeft + 1, s->cLeft + 1, 0, s));
-        adder(arr, new State(s->mRight - 2, s->cRight, s->mLeft + 2, s->cLeft, 0, s));
-        adder(arr, new State(s->mRight, s->cRight - 2, s->mLeft, s->cLeft + 2, 0, s));
-        adder(arr, new State(s->mRight - 1, s->cRight, s->mLeft + 1, s->cLeft, 0, s));
-        adder(arr, new State(s->mRight, s->cRight - 1, s->mLeft, s->cLeft + 1, 0, s));
+        adder(arr, std::make_unique<State>(s->mRight - 1, s->cRight - 1, s->mLeft + 1, s->cLeft + 1, 0, s));
+        adder(arr, std::make_unique<State>(s->mRight - 2, s->cRight, s->mLeft + 2, s->cLeft, 0, s));
+        adder(arr, std::make_unique<State>(s->mRight, s->cRight - 2, s->mLeft, s->cLeft + 2, 0, s));
+        adder(arr, std::make_unique<State>(s->mRight - 1, s->cRight, s->mLeft + 1, s->cLeft, 0, s));
+        adder(arr, std::make_unique<State>(s->mRight, s->cRight - 1, s->mLeft, s->cLeft + 1, 0, s));
     }
     return arr;
 }
 
-void path(State *s)
+void path(StatePtr s)
 {
     if (s == NULL)
     {
         std::cout << "No Solution Found.\n";
     }
-    State *tmp = s;
-    std::vector<State *> arr;
+    StatePtr tmp = s;
+    std::vector<StatePtr> arr;
     while (tmp != NULL)
     {
         //tmp->print();
@@ -56,7 +57,7 @@ void path(State *s)
     return;
 }
 
-bool contains(std::deque<State *> fringe, State *s)
+bool contains(std::deque<StatePtr> fringe, StatePtr s)
 {
     for (auto f : fringe)
     {
@@ -68,7 +69,7 @@ bool contains(std::deque<State *> fringe, State *s)
     return false;
 }
 
-void solve(State *start)
+void solve(StatePtr start)
 {
     int counter = 0;
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
@@ -80,7 +81,7 @@ void solve(State *start)
         path(start);
         return;
     }
-    std::deque<State *> fringe;
+    std::deque<StatePtr> fringe;
     fringe.push_back(start);
     while (true)
     {
@@ -89,10 +90,10 @@ void solve(State *start)
             path(NULL);
             return;
         }
-        State *s = fringe.front();
+        StatePtr s = fringe.front();
         counter++;
         fringe.pop_front();
-        std::vector<State *> arr = generateNodeArray(s);
+        std::vector<StatePtr> arr = generateNodeArray(s);
         for (int i = 0; i < arr.size(); i++)
         {
             if (!contains(fringe, arr[i]))
@@ -129,7 +130,7 @@ int main()
         std::cout << "Cannibals: ";
         std::cin >> cl;
     }
-    State *start = new State(0, 0, ml, cl, 0, nullptr);
+    StatePtr start = std::make_unique<State>(0, 0, ml, cl, 0, nullptr);
     solve(start);
     return 0;
 }

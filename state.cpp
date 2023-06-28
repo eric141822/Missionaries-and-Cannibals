@@ -1,6 +1,7 @@
 #include "state.h"
 #include <iostream>
-State::State(int mRight, int cRight, int mLeft, int cLeft, int boatPos, State *parent)
+typedef std::shared_ptr<State> StatePtr;
+State::State(int mRight, int cRight, int mLeft, int cLeft, int boatPos, StatePtr parent)
 {
     this->mRight = mRight;
     this->cRight = cRight;
@@ -39,7 +40,7 @@ void State::print()
     std::cout << std::endl;
 }
 
-bool State::equals(State *s)
+bool State::equals(StatePtr s)
 {
     return (s->mLeft == this->mLeft && s->cLeft == this->cLeft && s->mRight == this->mRight && s->cRight == this->cRight && s->boatPos == this->boatPos);
 }
