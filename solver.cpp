@@ -19,19 +19,19 @@ std::vector<StatePtr> generateNodeArray(StatePtr s)
     std::vector<StatePtr> arr;
     if (s->boatPos == 0)
     {
-        adder(arr, std::make_unique<State>(s->mRight + 1, s->cRight + 1, s->mLeft - 1, s->cLeft - 1, 1, s)); //move 1m and 1c to right
-        adder(arr, std::make_unique<State>(s->mRight + 2, s->cRight, s->mLeft - 2, s->cLeft, 1, s));         //move 2m to right
-        adder(arr, std::make_unique<State>(s->mRight, s->cRight + 2, s->mLeft, s->cLeft - 2, 1, s));         //move 2c to right
-        adder(arr, std::make_unique<State>(s->mRight + 1, s->cRight, s->mLeft - 1, s->cLeft, 1, s));         //move 1m to right
-        adder(arr, std::make_unique<State>(s->mRight, s->cRight + 1, s->mLeft, s->cLeft - 1, 1, s));
+        adder(arr, std::make_shared<State>(s->mRight + 1, s->cRight + 1, s->mLeft - 1, s->cLeft - 1, 1, s)); //move 1m and 1c to right
+        adder(arr, std::make_shared<State>(s->mRight + 2, s->cRight, s->mLeft - 2, s->cLeft, 1, s));         //move 2m to right
+        adder(arr, std::make_shared<State>(s->mRight, s->cRight + 2, s->mLeft, s->cLeft - 2, 1, s));         //move 2c to right
+        adder(arr, std::make_shared<State>(s->mRight + 1, s->cRight, s->mLeft - 1, s->cLeft, 1, s));         //move 1m to right
+        adder(arr, std::make_shared<State>(s->mRight, s->cRight + 1, s->mLeft, s->cLeft - 1, 1, s));
     }
     else
     {
-        adder(arr, std::make_unique<State>(s->mRight - 1, s->cRight - 1, s->mLeft + 1, s->cLeft + 1, 0, s));
-        adder(arr, std::make_unique<State>(s->mRight - 2, s->cRight, s->mLeft + 2, s->cLeft, 0, s));
-        adder(arr, std::make_unique<State>(s->mRight, s->cRight - 2, s->mLeft, s->cLeft + 2, 0, s));
-        adder(arr, std::make_unique<State>(s->mRight - 1, s->cRight, s->mLeft + 1, s->cLeft, 0, s));
-        adder(arr, std::make_unique<State>(s->mRight, s->cRight - 1, s->mLeft, s->cLeft + 1, 0, s));
+        adder(arr, std::make_shared<State>(s->mRight - 1, s->cRight - 1, s->mLeft + 1, s->cLeft + 1, 0, s));
+        adder(arr, std::make_shared<State>(s->mRight - 2, s->cRight, s->mLeft + 2, s->cLeft, 0, s));
+        adder(arr, std::make_shared<State>(s->mRight, s->cRight - 2, s->mLeft, s->cLeft + 2, 0, s));
+        adder(arr, std::make_shared<State>(s->mRight - 1, s->cRight, s->mLeft + 1, s->cLeft, 0, s));
+        adder(arr, std::make_shared<State>(s->mRight, s->cRight - 1, s->mLeft, s->cLeft + 1, 0, s));
     }
     return arr;
 }
@@ -46,7 +46,6 @@ void path(StatePtr s)
     std::vector<StatePtr> arr;
     while (tmp != NULL)
     {
-        //tmp->print();
         arr.insert(arr.begin(), tmp);
         tmp = tmp->parent;
     }
@@ -130,7 +129,7 @@ int main()
         std::cout << "Cannibals: ";
         std::cin >> cl;
     }
-    StatePtr start = std::make_unique<State>(0, 0, ml, cl, 0, nullptr);
+    StatePtr start(new State(0, 0, ml, cl, 0, nullptr));
     solve(start);
     return 0;
 }
