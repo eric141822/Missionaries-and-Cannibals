@@ -12,5 +12,3 @@ An input is only valid if a possible solution exists.
 ## Regarding whether a solution is possible
 
 Please check out the explanation that can be found [here](https://puzzling.stackexchange.com/questions/55154/when-do-missionaries-and-cannibals-problems-have-solutions).
-
-In short, it's impossible for a solution to exist with more than 3 Missionaries and 3 Cannibals.
