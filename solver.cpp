@@ -121,7 +121,7 @@ int main()
     std::cin >> ml;
     std::cout << "Cannibals: ";
     std::cin >> cl;
-    while (ml < cl || cl > 3)
+    while (ml < cl || (cl > 3 && ml <= cl))
     {
         std::cout << "Invalid input. Try again." << std::endl;
         std::cout << "Missionaries: ";
